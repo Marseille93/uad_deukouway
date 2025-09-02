@@ -240,9 +240,9 @@ export default function HomePage() {
 								variants={itemVariants}
 								className="text-lg sm:text-xl text-gray-600 mb-8 leading-relaxed"
 							>
-								La première plateforme dédiée aux étudiants de l'UAD. Trouve ta
+								{`La première plateforme dédiée aux étudiants de l'UAD. Trouve ta
 								chambre, ta colocation ou publie ton annonce en toute
-								simplicité.
+								simplicité.`}
 							</motion.p>
 
 							<motion.div
@@ -272,6 +272,7 @@ export default function HomePage() {
 						</motion.div>
 
 						<motion.div
+							//@ts-ignore
 							variants={floatingVariants}
 							animate="animate"
 							className="relative mt-8 lg:mt-0 ml-8"
@@ -463,8 +464,8 @@ export default function HomePage() {
 							?
 						</h2>
 						<p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
-							Une plateforme pensée par et pour les étudiants de l'Université
-							Alioune Diop de Bambey
+							{`Une plateforme pensée par et pour les étudiants de l'Université
+							Alioune Diop de Bambey`}
 						</p>
 					</motion.div>
 
@@ -523,16 +524,16 @@ export default function HomePage() {
 							</div>
 
 							<h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6">
-								D'étudiant à étudiant,
+								{`D'étudiant à étudiant,`}
 								<br />
 								nous comprenons tes besoins
 							</h2>
 
 							<p className="text-lg sm:text-xl text-blue-100 mb-8 leading-relaxed">
-								Ce projet est né de l'expérience d'un étudiant qui a galéré pour
+								{`Ce projet est né de l'expérience d'un étudiant qui a galéré pour
 								trouver un logement décent à Bambey. Aujourd'hui, nous
 								facilitons cette recherche pour toute la communauté étudiante de
-								l'UAD.
+								l'UAD.`}
 							</p>
 
 							<div className="space-y-4">
@@ -572,16 +573,16 @@ export default function HomePage() {
 									<div>
 										<h3 className="font-semibold">Créé avec passion</h3>
 										<p className="text-blue-100 text-sm">
-											Par un étudiant de l'UAD
+											{`Par un étudiant de l'UAD`}
 										</p>
 									</div>
 								</div>
 
 								<blockquote className="text-base sm:text-lg italic text-blue-100 mb-4">
-									"J'ai créé cette plateforme parce que je sais à quel point il
+									{`"J'ai créé cette plateforme parce que je sais à quel point il
 									peut être difficile de trouver un logement décent quand on est
 									étudiant. Mon objectif : simplifier cette recherche pour tous
-									mes camarades."
+									mes camarades."`}
 								</blockquote>
 
 								<div className="flex items-center">
@@ -722,7 +723,7 @@ export default function HomePage() {
 							Ce que disent nos étudiants
 						</h2>
 						<p className="text-lg sm:text-xl text-gray-600">
-							Rejoins une communauté d'étudiants satisfaits
+							{`Rejoins une communauté d'étudiants satisfaits`}
 						</p>
 					</motion.div>
 
@@ -748,7 +749,8 @@ export default function HomePage() {
 								</div>
 
 								<blockquote className="text-lg sm:text-xl text-gray-700 mb-6 italic leading-relaxed">
-									"{testimonials[currentTestimonial].content}"
+									{/*  eslint-disable-next-line react/no-unescaped-entities */}
+									{testimonials[currentTestimonial].content}
 								</blockquote>
 
 								<div className="flex items-center justify-center">
@@ -804,11 +806,11 @@ export default function HomePage() {
 						<motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
 							<Link href="/auth">
 								<Button
-									size="md"
+									size="sm"
 									className="bg-white text-blue-600 hover:bg-gray-100 text-sm px-8 sm:px-12 py-6 shadow-xl"
 								>
 									<Users className="w-5 h-5 mr-2" />
-									Commencer maintenant - C'est gratuit !
+									{`Commencer maintenant - C'est gratuit !`}
 								</Button>
 							</Link>
 						</motion.div>
@@ -837,8 +839,8 @@ export default function HomePage() {
 								</div>
 							</div>
 							<p className="text-gray-600 mb-4 text-sm sm:text-base">
-								La plateforme de référence pour les logements étudiants à
-								Bambey. Créée par un étudiant, pour les étudiants de l'UAD.
+								{`La plateforme de référence pour les logements étudiants à
+								Bambey. Créée par un étudiant, pour les étudiants de l'UAD.`}
 							</p>
 							<div className="flex flex-wrap gap-2">
 								<Badge variant="outline">🎓 100% Étudiant</Badge>
@@ -885,8 +887,8 @@ export default function HomePage() {
 
 					<div className="border-t mt-8 pt-8 text-center text-gray-500">
 						<p className="text-sm sm:text-base">
-							&copy; 2025 UAD Deukouway. Développé par ALGO FALICE un étudiant
-							de l'UADB pour les étudiants de l'UADB.
+							{`&copy; 2025 UAD Deukouway. Développé par ALGO FALICE un étudiant
+							de l'UADB pour les étudiants de l'UADB.`}
 						</p>
 					</div>
 				</div>
