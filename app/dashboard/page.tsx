@@ -269,14 +269,6 @@ export default function DashboardPage() {
 									height={50}
 								/>
 							</div>
-							<div>
-								<h1 className="text-xl font-bold text-gray-900">
-									UAD Deukouway
-								</h1>
-								<p className="text-xs text-gray-500 hidden sm:block">
-									Logements étudiants
-								</p>
-							</div>
 						</div>
 						<div className="flex items-center space-x-3">
 							<span className="text-sm text-gray-700 hidden sm:block">

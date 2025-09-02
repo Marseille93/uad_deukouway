@@ -513,12 +513,6 @@ export default function AdminPage() {
 									height={50}
 								/>
 							</div>
-							<div>
-								<h1 className="text-xl font-bold text-gray-900">
-									UAD Deukouway - Administration
-								</h1>
-								<p className="text-xs text-gray-500">Gestion du système</p>
-							</div>
 						</div>
 						<div className="flex items-center space-x-3">
 							<span className="text-sm text-gray-700">

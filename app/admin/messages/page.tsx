@@ -282,9 +282,6 @@ export default function AdminMessagesPage() {
 										height={50}
 									/>
 								</div>
-								<span className="font-semibold text-gray-900">
-									Gestion des Messages
-								</span>
 							</div>
 						</Link>
 						<div className="flex items-center space-x-3">

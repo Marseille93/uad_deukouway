@@ -171,12 +171,6 @@ export default function HomePage() {
 									height={50}
 								/>
 							</div>
-							<div>
-								<h1 className="text-xl font-bold text-gray-900">
-									UAD Deukouway
-								</h1>
-								<p className="text-xs text-gray-500">Logements étudiants</p>
-							</div>
 						</motion.div>
 						<motion.div
 							className="flex items-center space-x-4"
@@ -568,7 +562,7 @@ export default function HomePage() {
 							<div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8">
 								<div className="flex items-center mb-6">
 									<div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mr-4">
-										<Coffee className="w-6 h-6 text-blue-600" />
+										<HomeIcon className="w-6 h-6 text-blue-600" />
 									</div>
 									<div>
 										<h3 className="font-semibold">Créé avec passion</h3>
@@ -587,10 +581,15 @@ export default function HomePage() {
 
 								<div className="flex items-center">
 									<div className="w-10 h-10 bg-white rounded-full flex items-center justify-center mr-3">
-										<span className="text-blue-600 font-bold">M</span>
+										<Image
+											src="/Algo Facile.png"
+											alt="Logo"
+											width={30}
+											height={30}
+										/>
 									</div>
 									<div>
-										<p className="font-medium">Seydina Ibrahima DIENG</p>
+										<p className="font-medium">ALGO FACILE</p>
 										<p className="text-blue-200 text-sm">
 											Fondateur & Étudiant UAD
 										</p>
@@ -664,7 +663,7 @@ export default function HomePage() {
 							>
 								{/* iPhone Mockup */}
 								<div
-									className={`mockup-phone border-primary scale-75 mx-auto ${
+									className={`mockup-phone border-primary mx-auto max-w-[90vw] scale-90 sm:scale-100 ${
 										index % 2 === 1 ? "lg:col-start-2" : ""
 									}`}
 								>
@@ -675,7 +674,7 @@ export default function HomePage() {
 												<img
 													alt={`Screenshot étape ${step.step}`}
 													src={step.screenshot}
-													className="w-full h-full object-cover"
+													className="max-w-full h-auto object-contain"
 												/>
 											</div>
 										</div>

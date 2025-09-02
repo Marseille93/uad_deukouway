@@ -193,9 +193,6 @@ export default function AdminStatisticsPage() {
 										height={50}
 									/>
 								</div>
-								<span className="font-semibold text-gray-900">
-									Statistiques Admin
-								</span>
 							</div>
 						</Link>
 						<div className="flex items-center space-x-3">

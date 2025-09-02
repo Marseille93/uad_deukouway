@@ -156,9 +156,6 @@ export default function ContactAdminPage() {
 								<div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
 									<Home className="w-5 h-5 text-white" />
 								</div>
-								<span className="font-semibold text-gray-900">
-									UAD Deukouway
-								</span>
 							</div>
 						</Link>
 						<Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">
