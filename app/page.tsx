@@ -586,7 +586,7 @@ export default function HomePage() {
 								</blockquote>
 
 								<div className="flex items-center">
-									<div className="w-10 h-10 bg-white rounded-full flex items-center justify-center mr-3">
+									<div className="w-30 h-30 bg-white rounded-full flex items-center justify-center mr-3">
 										<Image
 											src="/Algo Facile.png"
 											alt="Logo"
@@ -892,7 +892,8 @@ export default function HomePage() {
 
 					<div className="border-t mt-8 pt-8 text-center text-gray-500">
 						<p className="text-sm sm:text-base">
-							{`&copy; 2025 UAD Deukouway. Développé par ALGO FALICE un étudiant
+							&copy;{" "}
+							{`2025 UAD Deukouway. Développé par ALGO FALICE un étudiant
 							de l'UADB pour les étudiants de l'UADB.`}
 						</p>
 					</div>
