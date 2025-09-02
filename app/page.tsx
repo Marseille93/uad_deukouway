@@ -171,6 +171,12 @@ export default function HomePage() {
 									height={50}
 								/>
 							</div>
+							<div>
+								<h1 className="text-sm font-bold text-gray-900">
+									UAD Deukouway
+								</h1>
+								<p className="text-xs text-gray-500">Logements étudiants</p>
+							</div>
 						</motion.div>
 						<motion.div
 							className="flex items-center space-x-4"
@@ -674,7 +680,7 @@ export default function HomePage() {
 												<img
 													alt={`Screenshot étape ${step.step}`}
 													src={step.screenshot}
-													className="max-w-full h-auto object-contain"
+													className="w-full h-full object-cover"
 												/>
 											</div>
 										</div>
