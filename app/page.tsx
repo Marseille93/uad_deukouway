@@ -625,7 +625,7 @@ export default function HomePage() {
 						</p>
 					</motion.div>
 
-					<div className="space-y-16 lg:space-y-24">
+					<div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 relative">
 						{[
 							{
 								step: "1",
@@ -633,7 +633,6 @@ export default function HomePage() {
 								description: "Crée ton compte étudiant en quelques secondes",
 								icon: Users,
 								color: "from-blue-500 to-blue-600",
-								screenshot: "/deukouwayRegister.png",
 							},
 							{
 								step: "2",
@@ -642,7 +641,6 @@ export default function HomePage() {
 									"Utilise nos filtres pour trouver le logement qui correspond à tes critères",
 								icon: Search,
 								color: "from-indigo-500 to-indigo-600",
-								screenshot: "/deukouwayOffers.png",
 							},
 							{
 								step: "3",
@@ -651,63 +649,35 @@ export default function HomePage() {
 									"Échange avec les propriétaires via WhatsApp ou téléphone",
 								icon: Heart,
 								color: "from-purple-500 to-purple-600",
-								screenshot: "/deukouwayContact.png",
 							},
 						].map((step, index) => (
 							<motion.div
 								key={index}
-								initial={{
-									x: index % 2 === 0 ? -100 : 100,
-									opacity: 0,
-								}}
-								whileInView={{ x: 0, opacity: 1 }}
+								initial={{ opacity: 0, y: 20 }}
+								whileInView={{ opacity: 1, y: 0 }}
 								transition={{ duration: 0.6, delay: index * 0.2 }}
 								viewport={{ once: true }}
-								className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center ${
-									index % 2 === 1 ? "lg:grid-flow-col-dense" : ""
-								}`}
+								className="bg-white rounded-xl shadow-lg p-6 flex-1 flex flex-col items-center text-center relative"
 							>
-								{/* iPhone Mockup */}
-								<div
-									className={`mockup-phone border-primary mx-auto max-w-[90vw] scale-90 sm:scale-100 ${
-										index % 2 === 1 ? "lg:col-start-2" : ""
-									}`}
-								>
-									<div className="mockup-phone-camera"></div>
-									<div className="mockup-phone-display">
-										<div className="relative w-full h-full bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center pt-16">
-											<div className="">
-												<img
-													alt={`Screenshot étape ${step.step}`}
-													src={step.screenshot}
-													className="w-full h-full object-cover"
-												/>
-											</div>
-										</div>
+								<div className="flex items-center justify-center mb-4">
+									<step.icon className="w-6 h-6 text-gray-600 mr-2" />
+									<div
+										className={`w-8 h-8 rounded-full bg-gradient-to-r ${step.color} flex items-center justify-center text-white text-sm font-bold`}
+									>
+										{step.step}
 									</div>
 								</div>
+								<h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-2">
+									{step.title}
+								</h3>
+								<p className="text-gray-600 leading-relaxed text-base lg:text-lg">
+									{step.description}
+								</p>
 
-								{/* Content */}
-								<div
-									className={`text-center lg:text-left ${
-										index % 2 === 1 ? "lg:col-start-1" : ""
-									}`}
-								>
-									<div className="flex items-center justify-center mb-4">
-										<step.icon className="w-6 h-6 text-gray-600 mr-2" />
-										<div
-											className={`w-8 h-8 rounded-full bg-gradient-to-r ${step.color} flex items-center justify-center text-white text-sm font-bold`}
-										>
-											{step.step}
-										</div>
-									</div>
-									<h3 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-4">
-										{step.title}
-									</h3>
-									<p className="text-gray-600 leading-relaxed text-base lg:text-lg max-w-md mx-auto lg:mx-0">
-										{step.description}
-									</p>
-								</div>
+								{/* Flèche vers la prochaine carte */}
+								{index < 2 && (
+									<div className="hidden lg:block absolute top-1/2 right-0 w-12 h-0 border-t-2 border-gray-300 transform translate-x-full"></div>
+								)}
 							</motion.div>
 						))}
 					</div>
