@@ -19,6 +19,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import {
 	Home,
@@ -153,8 +154,13 @@ export default function ContactAdminPage() {
 						<Link href="/dashboard" className="flex items-center space-x-3">
 							<ArrowLeft className="w-5 h-5 text-gray-600" />
 							<div className="flex items-center space-x-2">
-								<div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
-									<Home className="w-5 h-5 text-white" />
+								<div className="rounded-lg flex items-center justify-center">
+									<Image
+										src="/uadDeukouway.png"
+										alt="Logo"
+										width={60}
+										height={50}
+									/>
 								</div>
 							</div>
 						</Link>
@@ -500,14 +506,16 @@ export default function ContactAdminPage() {
 											<Mail className="w-4 h-4 mr-3 text-blue-600" />
 											<div>
 												<p className="font-medium">Email direct</p>
-												<p className="text-sm">admin@uaddeukouway.sn</p>
+												<p className="text-sm">
+													seydinaibrahima.dieng@uadb.edu.sn
+												</p>
 											</div>
 										</div>
 										<div className="flex items-center text-gray-600">
 											<Phone className="w-4 h-4 mr-3 text-green-600" />
 											<div>
 												<p className="font-medium">WhatsApp</p>
-												<p className="text-sm">+221 70 123 45 67</p>
+												<p className="text-sm">+221 76 269 07 19</p>
 											</div>
 										</div>
 									</div>

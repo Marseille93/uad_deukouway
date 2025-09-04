@@ -108,15 +108,36 @@ const sampleListings = [
 	},
 ];
 
+const listingImages = [
+	"https://www.villard-bonnot.fr/uploads/Image/85/7392_698_Demander-un-logement.png",
+	"https://www.alsace.eu/media/8851/cea-logement.png?width=763&quality=75",
+	"https://montpellier.esnfrance.org/wp-content/uploads/sites/16/2023/11/maison-appartement-logement.png",
+	"https://www.villard-bonnot.fr/uploads/Image/85/7392_698_Demander-un-logement.png",
+];
+
+function getRandomImage() {
+	return listingImages[Math.floor(Math.random() * listingImages.length)];
+}
+
 export default function HomePage() {
 	const { user } = useAuth();
 	const [currentTestimonial, setCurrentTestimonial] = useState(0);
+	const [latestListings, setLatestListings] = useState<any[]>([]);
+	const [loadingListings, setLoadingListings] = useState(true);
 
 	useEffect(() => {
-		const interval = setInterval(() => {
-			setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-		}, 4000);
-		return () => clearInterval(interval);
+		const fetchListings = async () => {
+			try {
+				const res = await fetch("/api/listings?limit=3&page=1");
+				const data = await res.json();
+				setLatestListings(data.listings || []);
+			} catch (err) {
+				setLatestListings([]);
+			} finally {
+				setLoadingListings(false);
+			}
+		};
+		fetchListings();
 	}, []);
 
 	const containerVariants = {
@@ -365,65 +386,70 @@ export default function HomePage() {
 						viewport={{ once: true }}
 						className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
 					>
-						{sampleListings.slice(0, 5).map((listing, index) => (
-							<motion.div
-								key={listing.id}
-								variants={itemVariants}
-								whileHover={{ y: -5, scale: 1.02 }}
-								transition={{ duration: 0.2 }}
-								className={
-									index === 4
-										? "sm:col-span-2 lg:col-span-1 lg:col-start-2"
-										: ""
-								}
-							>
-								<Card className="h-full shadow-lg border-0 hover:shadow-xl transition-all duration-300 overflow-hidden">
-									<div className="relative">
-										<img
-											src={listing.image}
-											alt={listing.title}
-											className="w-full h-48 object-cover"
-										/>
-										<div className="absolute top-3 left-3">
-											<Badge className="bg-white/90 text-gray-800 hover:bg-white">
-												{listing.type}
-											</Badge>
+						{loadingListings ? (
+							<div className="col-span-3 text-center text-gray-500">
+								Chargement...
+							</div>
+						) : latestListings.length === 0 ? (
+							<div className="col-span-3 text-center text-gray-500">
+								Aucune annonce trouvée.
+							</div>
+						) : (
+							latestListings.map((listing, index) => (
+								<motion.div
+									key={listing.id}
+									variants={itemVariants}
+									whileHover={{ y: -5, scale: 1.02 }}
+									transition={{ duration: 0.2 }}
+								>
+									<Card className="h-full shadow-lg border-0 hover:shadow-xl transition-all duration-300 overflow-hidden">
+										<div className="relative">
+											<img
+												src={getRandomImage()}
+												alt={listing.title}
+												className="w-full h-48 object-cover"
+											/>
+											<div className="absolute top-3 left-3">
+												<Badge className="bg-white/90 text-gray-800 hover:bg-white">
+													{listing.type}
+												</Badge>
+											</div>
+											{listing.mode === "Colocation" &&
+												listing.availableSpots && (
+													<div className="absolute top-3 right-3">
+														<Badge className="bg-green-100 text-green-800 hover:bg-green-100">
+															{listing.availableSpots} places libres
+														</Badge>
+													</div>
+												)}
 										</div>
-										{listing.mode === "Colocation" &&
-											listing.availableSpots && (
-												<div className="absolute top-3 right-3">
-													<Badge className="bg-green-100 text-green-800 hover:bg-green-100">
-														{listing.availableSpots} places libres
-													</Badge>
-												</div>
-											)}
-									</div>
-									<CardContent className="p-4 sm:p-6">
-										<h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
-											{listing.title}
-										</h3>
-										<div className="flex items-center text-sm text-gray-600 mb-3">
-											<Users className="w-4 h-4 mr-1" />
-											{listing.location}
-										</div>
-										<div className="flex items-center justify-between">
-											<Badge
-												variant={
-													listing.mode === "Colocation"
-														? "secondary"
-														: "default"
-												}
-											>
-												{listing.mode}
-											</Badge>
-											<span className="text-sm text-blue-600 font-medium">
-												Disponible
-											</span>
-										</div>
-									</CardContent>
-								</Card>
-							</motion.div>
-						))}
+										<CardContent className="p-4 sm:p-6">
+											<h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
+												{listing.title}
+											</h3>
+											<div className="flex items-center text-sm text-gray-600 mb-3">
+												<Users className="w-4 h-4 mr-1" />
+												{listing.location}
+											</div>
+											<div className="flex items-center justify-between">
+												<Badge
+													variant={
+														listing.mode === "Colocation"
+															? "secondary"
+															: "default"
+													}
+												>
+													{listing.mode}
+												</Badge>
+												<span className="text-sm text-blue-600 font-medium">
+													Disponible
+												</span>
+											</div>
+										</CardContent>
+									</Card>
+								</motion.div>
+							))
+						)}
 					</motion.div>
 
 					<motion.div
@@ -586,12 +612,13 @@ export default function HomePage() {
 								</blockquote>
 
 								<div className="flex items-center">
-									<div className="w-30 h-30 bg-white rounded-full flex items-center justify-center mr-3">
+									<div className="w-16 h-16 rounded-full overflow-hidden bg-white flex items-center justify-center mr-3 border-2 border-blue-200">
 										<Image
 											src="/Algo Facile.png"
 											alt="Logo"
-											width={30}
-											height={30}
+											width={64}
+											height={64}
+											className="object-contain w-full h-full"
 										/>
 									</div>
 									<div>

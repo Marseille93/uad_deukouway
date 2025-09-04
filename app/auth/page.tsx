@@ -50,9 +50,11 @@ export default function AuthPage() {
 	// Rediriger si déjà connecté
 	useEffect(() => {
 		if (user && !loading) {
-			if (user.role === "student") {
+			if (user.role === "admin") {
+				router.push("/admin");
+			} else if (user.role === "student" || user.role === "landlord") {
 				router.push("/dashboard");
-			} else router.push("/admin");
+			}
 		}
 	}, [user, loading, router]);
 
@@ -66,7 +68,10 @@ export default function AuthPage() {
 		if (result.success) {
 			if (result.user?.role === "admin") {
 				router.push("/admin");
-			} else {
+			} else if (
+				result.user?.role === "student" ||
+				result.user?.role === "landlord"
+			) {
 				router.push("/dashboard");
 			}
 		} else {
@@ -99,7 +104,10 @@ export default function AuthPage() {
 		if (result.success) {
 			if (result.user?.role === "admin") {
 				router.push("/admin");
-			} else {
+			} else if (
+				result.user?.role === "student" ||
+				result.user?.role === "landlord"
+			) {
 				router.push("/dashboard");
 			}
 		} else {
