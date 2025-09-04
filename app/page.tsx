@@ -130,6 +130,7 @@ export default function HomePage() {
 			try {
 				const res = await fetch("/api/listings?limit=3&page=1");
 				const data = await res.json();
+				console.log("Listings API data:", data); // Ajoute ce log
 				setLatestListings(data.listings || []);
 			} catch (err) {
 				setLatestListings([]);
@@ -381,9 +382,8 @@ export default function HomePage() {
 
 					<motion.div
 						variants={containerVariants}
-						initial="hidden"
-						whileInView="visible"
-						viewport={{ once: true }}
+						initial="visible"
+						animate="visible"
 						className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
 					>
 						{loadingListings ? (
@@ -397,7 +397,7 @@ export default function HomePage() {
 						) : (
 							latestListings.map((listing, index) => (
 								<motion.div
-									key={listing.id}
+									key={listing.id || index}
 									variants={itemVariants}
 									whileHover={{ y: -5, scale: 1.02 }}
 									transition={{ duration: 0.2 }}
@@ -405,13 +405,17 @@ export default function HomePage() {
 									<Card className="h-full shadow-lg border-0 hover:shadow-xl transition-all duration-300 overflow-hidden">
 										<div className="relative">
 											<img
-												src={getRandomImage()}
-												alt={listing.title}
+												src={
+													listing.images && listing.images.length > 0
+														? listing.images[0]
+														: getRandomImage()
+												}
+												alt={listing.title || "Annonce logement"}
 												className="w-full h-48 object-cover"
 											/>
 											<div className="absolute top-3 left-3">
 												<Badge className="bg-white/90 text-gray-800 hover:bg-white">
-													{listing.type}
+													{listing.type || "Type inconnu"}
 												</Badge>
 											</div>
 											{listing.mode === "Colocation" &&
@@ -425,11 +429,11 @@ export default function HomePage() {
 										</div>
 										<CardContent className="p-4 sm:p-6">
 											<h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
-												{listing.title}
+												{listing.title || "Titre non disponible"}
 											</h3>
 											<div className="flex items-center text-sm text-gray-600 mb-3">
 												<Users className="w-4 h-4 mr-1" />
-												{listing.location}
+												{listing.location || "Lieu inconnu"}
 											</div>
 											<div className="flex items-center justify-between">
 												<Badge
@@ -439,7 +443,7 @@ export default function HomePage() {
 															: "default"
 													}
 												>
-													{listing.mode}
+													{listing.mode || "Mode inconnu"}
 												</Badge>
 												<span className="text-sm text-blue-600 font-medium">
 													Disponible
@@ -616,9 +620,9 @@ export default function HomePage() {
 										<Image
 											src="/Algo Facile.png"
 											alt="Logo"
-											width={64}
-											height={64}
-											className="object-contain w-full h-full"
+											width={37}
+											height={20}
+											//className="object-contain w-full h-full"
 										/>
 									</div>
 									<div>
