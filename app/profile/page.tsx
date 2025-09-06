@@ -50,6 +50,7 @@ interface UserListing {
 	admin_validated: boolean;
 	views: number;
 	created_at: string;
+	available_spots: number;
 }
 
 export default function ProfilePage() {
@@ -61,6 +62,11 @@ export default function ProfilePage() {
 	const [updateSuccess, setUpdateSuccess] = useState(false);
 	const [userListings, setUserListings] = useState<UserListing[]>([]);
 	const [loadingListings, setLoadingListings] = useState(true);
+	const [alertInfo, setAlertInfo] = useState<{
+		show: boolean;
+		message: string;
+		type: "success" | "error";
+	} | null>(null);
 
 	const [formData, setFormData] = useState({
 		firstName: "",
@@ -159,6 +165,64 @@ export default function ProfilePage() {
 			}
 		} catch (error) {
 			alert("Erreur de connexion");
+		}
+	};
+
+	const handleUpdateSpots = async (listingId: string, currentSpots: number) => {
+		const newSpots = currentSpots - 1;
+
+		try {
+			const response = await fetch(`/api/listings/${listingId}`, {
+				method: "PATCH",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ availableSpots: newSpots }),
+			});
+
+			if (!response.ok) {
+				const error = await response.json();
+				throw new Error(error.error || "Erreur lors de la mise à jour");
+			}
+
+			// Mettre à jour l'interface
+			setUserListings((prevListings) =>
+				prevListings.map((listing) =>
+					listing.id === listingId
+						? {
+								...listing,
+								available_spots: newSpots,
+								status: newSpots === 0 ? "inactive" : "active",
+						  }
+						: listing
+				)
+			);
+
+			// Notification de succès
+			const alertDiv = document.createElement("div");
+			alertDiv.className = "alert alert-success fixed top-4 right-4 z-50";
+			alertDiv.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <span>${
+				newSpots === 0
+					? "L'annonce a été désactivée"
+					: `Places réduites à ${newSpots}`
+			}</span>
+    `;
+			document.body.appendChild(alertDiv);
+			setTimeout(() => alertDiv.remove(), 3000);
+		} catch (error: any) {
+			// Notification d'erreur
+			const alertDiv = document.createElement("div");
+			alertDiv.className = "alert alert-error fixed top-4 right-4 z-50";
+			alertDiv.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <span>${error.message}</span>
+    `;
+			document.body.appendChild(alertDiv);
+			setTimeout(() => alertDiv.remove(), 3000);
 		}
 	};
 
@@ -778,6 +842,40 @@ export default function ProfilePage() {
 																		Supprimer
 																	</Button>
 																</div>
+																{listing.mode.toLowerCase() === "colocation" &&
+																	listing.available_spots > 0 && (
+																		<Button
+																			onClick={() => {
+																				const modal = document.getElementById(
+																					"reduce_spots_modal"
+																				) as HTMLDialogElement;
+																				if (modal) {
+																					const newSpots =
+																						listing.available_spots - 1;
+																					modal.dataset.listingId = listing.id;
+																					modal.dataset.currentSpots = String(
+																						listing.available_spots
+																					);
+																					document.getElementById(
+																						"current_spots"
+																					)!.textContent = String(
+																						listing.available_spots
+																					);
+																					document.getElementById(
+																						"new_spots"
+																					)!.textContent = String(newSpots);
+																					modal.showModal();
+																				}
+																			}}
+																			variant="outline"
+																			size="sm"
+																			className="mt-2 w-full"
+																		>
+																			<Users className="w-4 h-4 mr-2" />
+																			Réduire les places disponibles (
+																			{listing.available_spots})
+																		</Button>
+																	)}
 															</CardContent>
 														</Card>
 													</motion.div>
@@ -814,6 +912,43 @@ export default function ProfilePage() {
 					</motion.div>
 				</motion.div>
 			</div>
+
+			<dialog id="reduce_spots_modal" className="modal">
+				<div className="modal-box bg-white">
+					<h3 className="font-bold text-lg text-gray-900">
+						Réduire le nombre de places
+					</h3>
+					<p className="py-4 text-gray-700">
+						Voulez-vous réduire le nombre de places disponibles de{" "}
+						<span id="current_spots" className="font-bold text-gray-900"></span>{" "}
+						à <span id="new_spots" className="font-bold text-gray-900"></span> ?
+					</p>
+					<div className="modal-action">
+						<form method="dialog" className="flex gap-2">
+							<button className="btn btn-outline text-gray-700 hover:bg-gray-100">
+								Annuler
+							</button>
+							<button
+								className="btn bg-blue-600 hover:bg-blue-700 text-white"
+								onClick={(e) => {
+									e.preventDefault();
+									const modal = document.getElementById(
+										"reduce_spots_modal"
+									) as HTMLDialogElement;
+									const listingId = modal.dataset.listingId;
+									const currentSpots = Number(modal.dataset.currentSpots);
+									if (listingId && currentSpots) {
+										handleUpdateSpots(listingId, currentSpots);
+										modal.close();
+									}
+								}}
+							>
+								Confirmer
+							</button>
+						</form>
+					</div>
+				</div>
+			</dialog>
 		</div>
 	);
 }

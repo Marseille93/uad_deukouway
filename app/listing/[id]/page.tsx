@@ -198,7 +198,7 @@ export default function ListingDetailPage({
 			<div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-cyan-50 flex items-center justify-center">
 				<div className="text-center">
 					<Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-blue-600" />
-					<p className="text-gray-600">Chargement de l'annonce...</p>
+					<p className="text-gray-600">{`Chargement de l'annonce...`}</p>
 				</div>
 			</div>
 		);
@@ -206,23 +206,14 @@ export default function ListingDetailPage({
 
 	if (error || !listing) {
 		return (
-			<div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-cyan-50 flex items-center justify-center">
+			<div className="min-h-screen flex items-center justify-center bg-gray-50">
 				<div className="text-center">
-					<div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-						<Home className="w-8 h-8 text-red-400" />
-					</div>
-					<h3 className="text-lg font-semibold text-gray-900 mb-2">
-						{error || "Annonce non trouvée"}
-					</h3>
-					<p className="text-gray-600 mb-4">
-						Cette annonce n'existe pas ou n'est plus disponible
-					</p>
-					<Link href="/">
-						<Button variant="outline">
-							<ArrowLeft className="w-4 h-4 mr-2" />
-							Retour à l'accueil
-						</Button>
-					</Link>
+					<h2 className="text-xl font-semibold text-gray-900 mb-2">
+						{`Cette annonce n'existe pas ou n'est plus disponible`}
+					</h2>
+					<button onClick={() => router.back()} className="btn btn-primary">
+						Retour
+					</button>
 				</div>
 			</div>
 		);

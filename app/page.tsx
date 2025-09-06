@@ -886,7 +886,7 @@ export default function HomePage() {
 							<div className="space-y-2 text-gray-600 text-sm sm:text-base">
 								<p>Université Alioune Diop</p>
 								<p>Bambey, Sénégal</p>
-								<p>seydinaibrahima.dieng@uad.edu.sn</p>
+								<p>seydinaibrahima.dieng@uadb.edu.sn</p>
 							</div>
 						</div>
 					</div>
