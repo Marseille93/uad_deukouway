@@ -152,7 +152,7 @@ export default function HomePage() {
 		// Date cible: Prochain mercredi 17h00
 		const getNextWednesday = () => {
 			const now = new Date();
-			const targetDay = 3; // 3 = Mercredi (0-6, 0 étant Dimanche)
+			const targetDay = 4; // 3 = Mercredi (0-6, 0 étant Dimanche)
 			const targetHour = 17;
 
 			let nextWednesday = new Date(now);
