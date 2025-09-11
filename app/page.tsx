@@ -124,13 +124,6 @@ export default function HomePage() {
 	const [currentTestimonial, setCurrentTestimonial] = useState(0);
 	const [latestListings, setLatestListings] = useState<any[]>([]);
 	const [loadingListings, setLoadingListings] = useState(true);
-	const [timeLeft, setTimeLeft] = useState({
-		days: 0,
-		hours: 0,
-		minutes: 0,
-		seconds: 0,
-	});
-	const [showMainContent, setShowMainContent] = useState(false);
 
 	useEffect(() => {
 		const fetchListings = async () => {
@@ -146,50 +139,6 @@ export default function HomePage() {
 			}
 		};
 		fetchListings();
-	}, []);
-
-	useEffect(() => {
-		// Date cible: Prochain mercredi 17h00
-		const getNextWednesday = () => {
-			const now = new Date();
-			const targetDay = 4; // 3 = Mercredi (0-6, 0 étant Dimanche)
-			const targetHour = 17;
-
-			let nextWednesday = new Date(now);
-			nextWednesday.setHours(targetHour, 0, 0, 0);
-
-			while (nextWednesday.getDay() !== targetDay) {
-				nextWednesday.setDate(nextWednesday.getDate() + 1);
-			}
-
-			if (now > nextWednesday) {
-				nextWednesday.setDate(nextWednesday.getDate() + 7);
-			}
-
-			return nextWednesday;
-		};
-
-		const targetDate = getNextWednesday();
-
-		const calculateTimeLeft = () => {
-			const now = new Date();
-			const difference = targetDate.getTime() - now.getTime();
-
-			if (difference <= 0) {
-				setShowMainContent(true);
-				return;
-			}
-
-			setTimeLeft({
-				days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-				hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-				minutes: Math.floor((difference / 1000 / 60) % 60),
-				seconds: Math.floor((difference / 1000) % 60),
-			});
-		};
-
-		const timer = setInterval(calculateTimeLeft, 1000);
-		return () => clearInterval(timer);
 	}, []);
 
 	const containerVariants = {
@@ -223,78 +172,6 @@ export default function HomePage() {
 			},
 		},
 	};
-
-	if (!showMainContent) {
-		return (
-			<div className="min-h-screen bg-gradient-to-br from-blue-600 to-indigo-600 flex flex-col items-center justify-center p-4">
-				<motion.div
-					initial={{ opacity: 0, y: -20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.8 }}
-					className="text-center"
-				>
-					<h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-						UAD Deukouway
-						<span className="block text-2xl md:text-3xl mt-2 text-blue-200">
-							arrive bientôt...
-						</span>
-					</h1>
-
-					<div className="flex gap-4 md:gap-8 justify-center mb-12">
-						{[
-							{ value: timeLeft.days, label: "Jours" },
-							{ value: timeLeft.hours, label: "Heures" },
-							{ value: timeLeft.minutes, label: "Minutes" },
-							{ value: timeLeft.seconds, label: "Secondes" },
-						].map((item, index) => (
-							<motion.div
-								key={item.label}
-								initial={{ scale: 0 }}
-								animate={{ scale: 1 }}
-								transition={{ delay: index * 0.1, type: "spring" }}
-								className="bg-white/10 backdrop-blur-sm rounded-lg p-4 min-w-[100px]"
-							>
-								<div className="text-3xl md:text-4xl font-bold text-white">
-									{String(item.value).padStart(2, "0")}
-								</div>
-								<div className="text-sm text-blue-200">{item.label}</div>
-							</motion.div>
-						))}
-					</div>
-
-					<motion.div
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						transition={{ delay: 0.5 }}
-						className="text-blue-200 text-lg md:text-xl"
-					>
-						La première plateforme de logement étudiant de l'UAD
-					</motion.div>
-				</motion.div>
-
-				{/* Animation flottante */}
-				<motion.div
-					className="absolute bottom-10"
-					animate={{
-						y: [0, -10, 0],
-					}}
-					transition={{
-						duration: 2,
-						repeat: Infinity,
-						ease: "easeInOut",
-					}}
-				>
-					<Image
-						src="/uadDeukouway.png"
-						alt="Logo"
-						width={100}
-						height={100}
-						className="opacity-80"
-					/>
-				</motion.div>
-			</div>
-		);
-	}
 
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-cyan-50">
