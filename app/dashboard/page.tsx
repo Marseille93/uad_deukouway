@@ -295,6 +295,15 @@ export default function DashboardPage() {
 				</div>
 			</header>
 
+			{/* Bannière UX onboarding */}
+			<div className="w-full bg-yellow-100 border-b border-yellow-300 px-4 py-3 flex items-center justify-center">
+				<span className="flex items-center text-yellow-900 text-sm sm:text-base font-medium text-center">
+					<span className="mr-2 text-xl">⚡</span>
+					Publiez une annonce seulement si vous avez une chambre / appartement à proposer.
+					<span className="hidden sm:inline">&nbsp;Si vous cherchez, utilisez les filtres pour trouver votre logement.</span>
+				</span>
+			</div>
+
 			<div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
 				{/* Welcome Section */}
 				<div className="mb-8">
@@ -328,14 +337,14 @@ export default function DashboardPage() {
 								<DialogTrigger asChild>
 									<Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
 										<Plus className="w-4 h-4 mr-2" />
-										Faire une annonce
+										Je propose un logement
 									</Button>
 								</DialogTrigger>
 								<DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
 									<DialogHeader>
 										<DialogTitle>Créer une nouvelle annonce</DialogTitle>
 										<DialogDescription>
-											Remplissez les informations pour publier votre annonce.
+											Remplissez les informations pour publier que vous avez une chambre disponible.
 											Elle sera visible après validation.
 										</DialogDescription>
 									</DialogHeader>
