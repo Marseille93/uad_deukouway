@@ -51,6 +51,8 @@ import {
 	Lightbulb,
 	User,
 } from "lucide-react";
+import { toast } from "sonner"; // Si tu utilises une lib de toast, sinon utilise alert
+
 import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth";
@@ -175,6 +177,23 @@ export default function AdminPage() {
 			setLoadingListings(false);
 		}
 	};
+
+	const handleNotifyUsers = async () => {
+    setProcessingId("notify");
+    try {
+        const res = await fetch("/api/admin/notify-users", { method: "POST" });
+        if (res.ok) {
+            toast?.success?.("Notification envoyée à tous les utilisateurs !");
+            // ou alert("Notification envoyée à tous les utilisateurs !");
+        } else {
+            toast?.error?.("Erreur lors de l'envoi des notifications");
+        }
+    } catch (e) {
+        toast?.error?.("Erreur réseau");
+    } finally {
+        setProcessingId(null);
+    }
+};
 
 	const fetchUsers = async () => {
 		try {
@@ -795,6 +814,19 @@ export default function AdminPage() {
 									Messages
 								</Button>
 							</Link>
+							<Button
+    variant="outline"
+    size="sm"
+    onClick={handleNotifyUsers}
+    disabled={processingId === "notify"}
+>
+    {processingId === "notify" ? (
+        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+    ) : (
+        <Mail className="w-4 h-4 mr-2" />
+    )}
+    Notifier les utilisateurs
+</Button>
 						</div>
 					</div>
 				</div>

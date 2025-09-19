@@ -299,8 +299,12 @@ export default function DashboardPage() {
 			<div className="w-full bg-yellow-100 border-b border-yellow-300 px-4 py-3 flex items-center justify-center">
 				<span className="flex items-center text-yellow-900 text-sm sm:text-base font-medium text-center">
 					<span className="mr-2 text-xl">⚡</span>
-					Publiez une annonce seulement si vous avez une chambre / appartement à proposer.
-					<span className="hidden sm:inline">&nbsp;Si vous cherchez, utilisez les filtres pour trouver votre logement.</span>
+					Publiez une annonce seulement si vous avez une chambre / appartement à
+					proposer.
+					<span className="hidden sm:inline">
+						&nbsp;Si vous cherchez, utilisez les filtres pour trouver votre
+						logement.
+					</span>
 				</span>
 			</div>
 
@@ -344,8 +348,8 @@ export default function DashboardPage() {
 									<DialogHeader>
 										<DialogTitle>Créer une nouvelle annonce</DialogTitle>
 										<DialogDescription>
-											Remplissez les informations pour publier que vous avez une chambre disponible.
-											Elle sera visible après validation.
+											Remplissez les informations pour publier que vous avez une
+											chambre disponible. Elle sera visible après validation.
 										</DialogDescription>
 									</DialogHeader>
 
